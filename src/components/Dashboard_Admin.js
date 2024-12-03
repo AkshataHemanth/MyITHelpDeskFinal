@@ -105,7 +105,7 @@ const Dashboard_admin = () => {
 
 	const handleRunReport = () => {
 		console.log('Redirecting to run report...');
-		const reportUrl = 'https://www.google.com/';
+		const reportUrl = 'https://us-east-2.quicksight.aws.amazon.com/sn/accounts/970547335561/dashboards/60aabc9d-b1af-4891-9f30-6d7a00e68927?directory_alias=EADReporting';
         window.open(reportUrl, '_blank');
 		navigate('/NewTicket');
 	};
