@@ -144,7 +144,7 @@ const Dashboard = () => {
 		                      <tr>
 		                          <th>AR Number</th>
 		                          <th>Ticket Status</th>
-		                          <th>Ticket Assigned to</th>
+		                          <th>Ticket Created By</th>
 		                      </tr>
 		                  </thead>
 		                  <tbody>
