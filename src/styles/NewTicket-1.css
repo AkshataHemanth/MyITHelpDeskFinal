@@ -1,0 +1,95 @@
+/* Main Container */
+.new-ticket-container {
+  padding: 20px;
+  background-color: #e0f7fa;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Header */
+.new-ticket-header {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form Styling */
+.new-ticket-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Two-column Row */
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row .form-group {
+  flex: 1; /* Ensure fields take equal width */
+}
+
+/* Input, Textarea, Select */
+input,
+textarea,
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Textarea */
+textarea {
+  min-height: 100px;
+}
+
+/* Label Styling */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Specific Field Widths */
+#street {
+  width: 100%; /* Make street field longer */
+}
+
+#unit {
+  width: 100%; /* Equal width with street */
+}
+
+#city,
+#state,
+#zip {
+  width: 100%; /* Equal spacing for city, state, and zip */
+}
+
+/* Submit Button */
+.submit-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
