@@ -3,10 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Dashboard.css';
 import { useUser } from './UserContext';
 
-const Dashboard = () => {
+const Dashboard_admin = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { username } = useUser();
+	const { setUser,user }  = useUser();
+
 
 	const [formData, setFormData] = useState({
 	  ARNumber: '',
@@ -29,8 +30,8 @@ const Dashboard = () => {
 	const [tickets, setTickets] = useState([]); // Tickets state
 
 	useEffect(() => {
-		if (username) {
-			const apiUrl = `https://14ks5879v9.execute-api.us-east-2.amazonaws.com/getDashUser/getTicketsbyEmail?email=${username}`;
+		if (user.username) {
+			const apiUrl = `https://14ks5879v9.execute-api.us-east-2.amazonaws.com/getDashUser/getTicketsbyEmail?email=${user.username}`;
 
 			fetch(apiUrl)
 				.then(response => response.json())
@@ -49,7 +50,7 @@ const Dashboard = () => {
 					console.error('Error fetching tickets:', error);
 				});
 		}
-	}, [username]);
+	}, [setUser]);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -106,7 +107,7 @@ const Dashboard = () => {
 		console.log('Redirecting to run report...');
 		const reportUrl = 'https://www.google.com/';
         window.open(reportUrl, '_blank');
-		//navigate('/NewTicket');
+		navigate('/NewTicket');
 	};
 
 	const handleAssignedTickets = () => {
@@ -306,7 +307,7 @@ const Dashboard = () => {
 
 			<div className="right-column">
 				<div className="user-info">
-					<p><strong>User: {username}</strong></p>
+					<p><strong>User: {user.username}</strong></p>
 					<a href="/logout" onClick={handleLogout} className="logout">
 						<i className="fas fa-sign-out-alt"></i>
 						<span className="icon">🔓</span>
@@ -318,4 +319,4 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default Dashboard_admin;

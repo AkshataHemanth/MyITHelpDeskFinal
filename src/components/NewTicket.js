@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import '../styles/NewTicket.css';
+import { useNavigate } from 'react-router-dom';
 
-const NewTicket = ({ handleClose }) => {
+import Dashboard from './Dashboard_User';
+
+import Dashboard_admin from "./Dashboard_Admin";
+
+import { useUser } from './UserContext';
+
+
+const NewTicket = ({ createtickets, setCreateTickets }) => {
+  // const { setUser,user }  = useUser();
+  const [_isTicketCreated, set_isTicketCreated] = useState("");
   // State to track form inputs
   const [formData, setFormData] = useState({
     firstName: '',
@@ -21,6 +31,8 @@ const NewTicket = ({ handleClose }) => {
     zip: '',
     phone: '',
   });
+
+  const navigate = useNavigate();
 
   // Handle changes in form inputs
   const handleChange = (e) => {
@@ -53,6 +65,7 @@ const NewTicket = ({ handleClose }) => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
+   
 
     const {
       firstName,
@@ -110,10 +123,21 @@ const NewTicket = ({ handleClose }) => {
 
       if (response.status === 200) {
         console.log('Ticket submitted successfully:', responseData);
+        set_isTicketCreated(true);
+        setCreateTickets(false);
+        // navigate('/Dashboard_User', {
+        //   state: { ticket_created: true },
+        // });
+
         // Optionally close the form after successful submission
-        handleClose();
+        // handleClose();
       } else {
         console.error('Failed to submit ticket:', responseData);
+        set_isTicketCreated(false);
+        // navigate('/Dashboard_User', {
+        //   state: { ticket_created: false },
+        // });
+
       }
     } catch (error) {
       console.error('Error submitting ticket:', error);
@@ -121,6 +145,8 @@ const NewTicket = ({ handleClose }) => {
   };
 
   return (
+    <div> 
+    
     <div className="new-ticket-container">
       <h2 className="new-ticket-header">TeamThree: Create a New Ticket</h2>
       <form className="new-ticket-form" onSubmit={handleSubmit}>
@@ -322,6 +348,8 @@ const NewTicket = ({ handleClose }) => {
           </button>
         </div>
       </form>
+    </div>
+    
     </div>
   );
 };

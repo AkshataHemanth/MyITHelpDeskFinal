@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext'; // Import the custom hook
 import '../styles/Login.css';
+
+import Dashboard from './Dashboard_User';
+import Dashboard_admin from "./Dashboard_Admin";
 
 const apiUrl = "https://xfbx83098c.execute-api.us-east-2.amazonaws.com/DEV/Login";
 
@@ -9,11 +12,19 @@ const Login = () => {
   const [username, setUsernameInput] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [_isuserType, set_isuserType] = useState("");
+
   const navigate = useNavigate();
 
   const { setUsername, setUserType } = useUser(); // Get setUsername and setUserType from context
 
-  const { setUser } = useUser(); // Destructure setUser from the context
+  const { setUser,user } = useUser(); // Destructure setUser from the context
+  
+  useEffect(() => {
+
+
+    console.log("username_login",user);
+}, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,13 +44,16 @@ const Login = () => {
 
       if (response.status === 200) {
         console.log('Login Successful');
+     
         setUser({ username, type: data.type }); // Update global user state
-        setError('');
-        if (data.type === 'admin') {
-          navigate('/Dashboard_Admin'); // Navigate based on user type
-        } else if (data.type === 'user') {
-          navigate('/Dashboard_User');
-        }
+        set_isuserType(data.type)
+        // _isLogin=true;
+        // setError('');
+        // if (data.type === 'admin') {
+        //   navigate('/Dashboard_Admin'); // Navigate based on user type
+        // } else if (data.type === 'user') {
+        //   navigate('/Dashboard_User');
+        // }
       }
     } catch (err) {
       console.error('Error:', err);
@@ -49,6 +63,17 @@ const Login = () => {
 
 
   return (
+    <div> 
+
+{ 
+        _isuserType === 'admin' ? (
+          <Dashboard_admin />
+        ) : _isuserType === 'user' ? (
+          <Dashboard/>
+        ) : (
+        
+    
+       
     <div className="login-background">
       <div className="login-container">
         <form onSubmit={handleSubmit}>
@@ -80,7 +105,14 @@ const Login = () => {
           </p>
         </form>
       </div>
+
+
+      </div>
+    )
+  }
     </div>
+   
+   
   );
 };
 

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Dashboard.css';
 import { useUser } from './UserContext';
+import NewTicket from './NewTicket'; 
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const location = useLocation();
-	const {username} = useUser();
+	const { setUser,user }  = useUser();
     
     const [formData, setFormData] = useState({
         ARNumber: '',
@@ -20,12 +21,25 @@ const Dashboard = () => {
         ticketTitle: '',
         ticketSummary: ''
     });
+    console.log("username",user.username);
+   
 
     const [tickets, setTickets] = useState([]); // Tickets state
+    const [createtickets, setCreateTickets] = useState(false); // Tickets state
+
+    const { ticket_created } = location.state || {};
+    console.log("ticket_created: ",ticket_created)
+
+
+
+  
 
 	useEffect(() => {
-	    if (username) {
-	        const apiUrl = `https://14ks5879v9.execute-api.us-east-2.amazonaws.com/getDashUser/getTicketsbyEmail?email=${username}`;
+        console.log("username2",user.username);
+
+
+	    if (user.username && createtickets==false) {
+	        const apiUrl = `https://14ks5879v9.execute-api.us-east-2.amazonaws.com/getDashUser/getTicketsbyEmail?email=${user.username}`;
 
 	        fetch(apiUrl)
 	            .then(response => response.json())
@@ -44,7 +58,7 @@ const Dashboard = () => {
 	                console.error('Error fetching tickets:', error);
 	            });
 	    }
-	}, [username]);
+	}, [setUser,createtickets]);
 		
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -97,8 +111,9 @@ const Dashboard = () => {
 
     const handleCreateTicket = () => {
         console.log('Redirecting to create ticket...');
+        setCreateTickets(true);
     
-	window.open('/NewTicket', '_blank');
+	// window.open('/NewTicket', '_blank');
     };
 
     const handleAssignedTickets = () => {
@@ -117,7 +132,11 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="dashboard-wrapper">
+
+        <div >
+{createtickets ? <NewTicket createtickets={createtickets} setCreateTickets={setCreateTickets}/>: 
+
+<div className="dashboard-wrapper">
 		<div className="left-column">
 		              <h3>My Tickets</h3>
 		              <table className="tickets-table">
@@ -261,7 +280,7 @@ const Dashboard = () => {
 
             <div className="right-column">
                 <div className="user-info">
-                    <p><strong>User: {username}</strong></p>
+                    <p><strong>User: {user.username}</strong></p>
                     <a href="/logout" onClick={handleLogout} className="logout">
                         <i className="fas fa-sign-out-alt"></i>
                         <span className="icon">🔓</span>
@@ -269,6 +288,8 @@ const Dashboard = () => {
                     </a>
                 </div>
             </div>
+            </div>
+            }
         </div>
     );
 };

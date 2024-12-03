@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState,useEffect } from 'react';
 
 // Create the UserContext
 const UserContext = createContext();
@@ -10,6 +10,11 @@ export const UserProvider = ({ children }) => {
     type: '' // Add type to the global state
   });
 
+  useEffect(() => {
+
+
+    console.log("username_real",user);
+}, [user]);
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Dashboard.css';
 import { useUser } from './UserContext';
 
-const Dashboard = () => {
+
+const Dashbodard = () => {
     const navigate = useNavigate();
     const location = useLocation();
 	const {username} = useUser();
@@ -97,7 +98,7 @@ const Dashboard = () => {
 
     const handleCreateTicket = () => {
         console.log('Redirecting to create ticket...');
-        navigate('/NewTicket');
+        // navigate('/NewTicket');
     };
 
     const handleAssignedTickets = () => {
@@ -287,4 +288,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Dashbodard;
